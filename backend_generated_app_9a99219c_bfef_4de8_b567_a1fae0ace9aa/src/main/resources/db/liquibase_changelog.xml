@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <property name="schemaName" value="generated_app"></property>
+    <property name="author=" value="db-designer"></property>
+    <changeSet id="v1-01-01" author="${author}">
+    
+ <createTable schemaName="${schemaName}" tableName="Training">
+	<column name="TrainingId" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="TrainingName" type="VARCHAR(250)" />
+    
+     <column name="TrainingLocation" type="VARCHAR(250)" />
+    
+     <column name="Date" type="DATE" />
+    
+     <column name="FeedbackReceived" type="VARCHAR(250)" />
+    
+     <column name="TrainingType" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+ <createTable schemaName="${schemaName}" tableName="Employee">
+	<column name="EmpId" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="Empname" type="VARCHAR(250)" />
+    
+     <column name="EmpDomain" type="VARCHAR(250)" />
+    
+     <column name="EmpEmail" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+ <createTable schemaName="${schemaName}" tableName="Feedback">
+	<column name="FeedbackId" type="SERIAL" autoIncrement="true" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="CoachPresentationSkillRate" type="VARCHAR(250)" />
+    
+     <column name="CoachTechnicalSkillRate" type="VARCHAR(250)" />
+    
+     <column name="CoachOverallRating" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+ <createTable schemaName="${schemaName}" tableName="Course">
+    <column name="CourseId" type="VARCHAR(250)" >
+        <constraints nullable="false" primaryKey="true"/>
+    </column>
+     <column name="InhouseAvailabe" type="BOOLEAN" />
+    
+     <column name="CourseName" type="VARCHAR(250)" />
+    
+     <column name="CoachId" type="VARCHAR(250)" />
+    
+     <column name="CoachName" type="VARCHAR(250)" />
+    
+     <column name="CourseSyllabus" type="VARCHAR(250)" />
+    
+     <column name="CourseType" type="VARCHAR(250)" />
+    
+ 	
+</createTable>
+	
+  <createTable schemaName="${schemaName}" tableName="EmployeeFeedbacks">
+	<column name="Id" type="SERIAL" autoIncrement="true">
+		<constraints primaryKey="true" nullable="false"/>
+	</column>
+	<column name="EmpId" type="INTEGER" />
+	<column name="FeedbackId" type="INTEGER" />
+</createTable>
+  <createTable schemaName="${schemaName}" tableName="EmployeeTrainings">
+	<column name="Id" type="SERIAL" autoIncrement="true">
+		<constraints primaryKey="true" nullable="false"/>
+	</column>
+	<column name="EmpId" type="INTEGER" />
+	<column name="TrainingId" type="INTEGER" />
+</createTable>
+  <createTable schemaName="${schemaName}" tableName="TrainingCourseList">
+	<column name="Id" type="SERIAL" autoIncrement="true">
+		<constraints primaryKey="true" nullable="false"/>
+	</column>
+	<column name="TrainingId" type="INTEGER" />
+	<column name="CourseId" type="VARCHAR(250)" />
+</createTable>
+
+ 
+	<addForeignKeyConstraint baseTableName="EmployeeFeedbacks" baseTableSchemaName="${schemaName}"  baseColumnNames="EmpId" constraintName="Feedback_EmpId_fk"
+	                                  referencedTableName="Employee" referencedTableSchemaName="${schemaName}" referencedColumnNames="EmpId"/>
+	                                  
+	<addForeignKeyConstraint baseTableName="EmployeeFeedbacks" baseTableSchemaName="${schemaName}"  baseColumnNames="FeedbackId" constraintName="Feedback_FeedbackId_fk"
+	                                  referencedTableName="Feedback" referencedTableSchemaName="${schemaName}" referencedColumnNames="FeedbackId"/>
+ 
+ 
+	<addForeignKeyConstraint baseTableName="EmployeeTrainings" baseTableSchemaName="${schemaName}"  baseColumnNames="EmpId" constraintName="Training_EmpId_fk"
+	                                  referencedTableName="Employee" referencedTableSchemaName="${schemaName}" referencedColumnNames="EmpId"/>
+	                                  
+	<addForeignKeyConstraint baseTableName="EmployeeTrainings" baseTableSchemaName="${schemaName}"  baseColumnNames="TrainingId" constraintName="Training_TrainingId_fk"
+	                                  referencedTableName="Training" referencedTableSchemaName="${schemaName}" referencedColumnNames="TrainingId"/>
+ 
+ 
+	<addForeignKeyConstraint baseTableName="TrainingCourseList" baseTableSchemaName="${schemaName}"  baseColumnNames="TrainingId" constraintName="Course_TrainingId_fk"
+	                                  referencedTableName="Training" referencedTableSchemaName="${schemaName}" referencedColumnNames="TrainingId"/>
+	                                  
+	<addForeignKeyConstraint baseTableName="TrainingCourseList" baseTableSchemaName="${schemaName}"  baseColumnNames="CourseId" constraintName="Course_CourseId_fk"
+	                                  referencedTableName="Course" referencedTableSchemaName="${schemaName}" referencedColumnNames="CourseId"/>
+ 
+	
+ 
+ 
+ 
+ 
+	<addColumn tableName="Course" schemaName="${schemaName}">
+	    <column name="CourseCourseFeedBack" type="INTEGER"/>
+	</addColumn>
+	<addForeignKeyConstraint baseTableName="Course" baseColumnNames="CourseCourseFeedBack" baseTableSchemaName="${schemaName}" constraintName="Course_CourseFeedBack_fk" referencedTableName="Feedback"
+	                                 referencedColumnNames="FeedbackId" referencedTableSchemaName="${schemaName}"/>
+ 
+
+	    </changeSet>
+</databaseChangeLog>

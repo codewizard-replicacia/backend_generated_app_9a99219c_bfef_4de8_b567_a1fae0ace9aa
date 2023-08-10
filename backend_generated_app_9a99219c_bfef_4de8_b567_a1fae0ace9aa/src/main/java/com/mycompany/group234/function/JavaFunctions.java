@@ -1,0 +1,27 @@
+package com.mycompany.group234.function;
+
+import com.mycompany.group234.model.Course;
+import com.mycompany.group234.model.Training;
+import com.mycompany.group234.model.Employee;
+import com.mycompany.group234.model.Feedback;
+import com.sap.olingo.jpa.metadata.core.edm.annotation.EdmFunction;
+import com.sap.olingo.jpa.metadata.core.edm.annotation.EdmParameter;
+import com.sap.olingo.jpa.metadata.core.edm.mapper.extension.ODataFunction;
+import com.mycompany.group234.repository.TrainingRepository;
+import com.mycompany.group234.repository.EmployeeRepository;
+import com.mycompany.group234.repository.FeedbackRepository;
+import com.mycompany.group234.repository.CourseRepository;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+public class JavaFunctions implements ODataFunction {
+
+
+    
+    
+}
+   

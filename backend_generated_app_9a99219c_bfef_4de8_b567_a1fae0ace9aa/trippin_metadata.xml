@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Model">
+            <EntityType HasStream="false" Name="Course">
+                <Key>
+                    <PropertyRef Name="CourseId"/>
+                </Key>
+                <Property Name="CourseId" Type="Edm.String"/>
+                <Property Name="InhouseAvailabe" Type="Edm.Boolean"/>
+                <Property Name="CourseName" Type="Edm.String"/>
+                <Property Name="CoachId" Type="Edm.String"/>
+                <Property Name="CoachName" Type="Edm.String"/>
+                <Property Name="CourseSyllabus" Type="Edm.String"/>
+                <Property Name="CourseType" Type="Edm.String"/>
+                <NavigationProperty Name="CourseFeedBack" Type="Model.Feedback"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="Training">
+                <Key>
+                    <PropertyRef Name="TrainingId"/>
+                </Key>
+                <Property Name="TrainingId" Type="Edm.Int32"/>
+                <Property Name="TrainingName" Type="Edm.String"/>
+                <Property Name="TrainingLocation" Type="Edm.String"/>
+                <Property Name="Date" Type="Edm.Date"/>
+                <Property Name="FeedbackReceived" Type="Edm.String"/>
+                <Property Name="TrainingType" Type="Edm.String"/>
+                <NavigationProperty Name="CourseList" Type="Collection(Model.Course)"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="Employee">
+                <Key>
+                    <PropertyRef Name="EmpId"/>
+                </Key>
+                <Property Name="EmpId" Type="Edm.Int32"/>
+                <Property Name="Empname" Type="Edm.String"/>
+                <Property Name="EmpDomain" Type="Edm.String"/>
+                <Property Name="EmpEmail" Type="Edm.String"/>
+                <NavigationProperty Name="Trainings" Type="Collection(Model.Training)"/>
+                <NavigationProperty Name="Feedbacks" Type="Collection(Model.Feedback)"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="Feedback">
+                <Key>
+                    <PropertyRef Name="FeedbackId"/>
+                </Key>
+                <Property Name="FeedbackId" Type="Edm.Int32"/>
+                <Property Name="CoachPresentationSkillRate" Type="Edm.String"/>
+                <Property Name="CoachTechnicalSkillRate" Type="Edm.String"/>
+                <Property Name="CoachOverallRating" Type="Edm.String"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Courses" EntityType="Model.Course">
+                    <NavigationPropertyBinding Path="CourseFeedBack" Target="Feedbacks"/>
+                </EntitySet>
+                <EntitySet Name="Trainings" EntityType="Model.Training">
+                    <NavigationPropertyBinding Path="CourseList" Target="Courses"/>
+                </EntitySet>
+                <EntitySet Name="Employees" EntityType="Model.Employee">
+                    <NavigationPropertyBinding Path="Trainings" Target="Trainings"/>
+                    <NavigationPropertyBinding Path="Feedbacks" Target="Feedbacks"/>
+                </EntitySet>
+                <EntitySet Name="Feedbacks" EntityType="Model.Feedback"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
